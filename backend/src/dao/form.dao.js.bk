@@ -1,0 +1,23 @@
+import  FormModel  from "../models/form.model.js";
+
+export class FormDAO {
+  static async create(data) {
+      return await FormModel.create(data);
+  }
+
+  static async findAll() {
+      return await FormModel.find();
+  }
+
+  static async findById(id) {
+      return await FormModel.findById(id);
+  }
+
+  static async updateById(id, data) {
+      return await FormModel.findByIdAndUpdate(id, data, { new: true });
+  }
+
+  static async deleteById(id) {
+      return await FormModel.findByIdAndDelete(id);
+  }
+}
