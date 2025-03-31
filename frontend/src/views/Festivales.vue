@@ -13,7 +13,7 @@
             </Carousel>
         </div>
         <div class="button-agregarFestival">
-            <Button label="Agregar Festival" icon="pi pi-plus" @click="mostrarDialogo" severity="contrast" class=""/>
+            <Button label="Agregar Festival" icon="pi pi-plus" @click="mostrarDialogo"  />
         </div>
         <Dialog v-model:visible="dialogVisible" header="Crear Festival" modal>
             <div class="p-fluid">
@@ -79,29 +79,29 @@
                 </Column>
                 <template #footer >
                     <div class=" footer-tabla ">
-                            <div class="text-footer" colspan="4">
-                                <strong>Fecha: </strong>{{ festival.fecha }}
-                            </div>
+                        <div class="text-footer" colspan="4">
+                            <strong>Fecha: </strong>{{ festival.fecha }}
+                        </div>
                     </div>
                 </template>
             </DataTable>
             <Dialog v-model:visible="dialogVisibleUpdate" header="Editar Festival" modal>
                 <div class="p-fluid">
                     <div class="p-field">
-                    <label for="nombre_festival">Nombre</label>
-                    <InputText id="nombre_festival" name="nombre_festival" v-model="festivalSeleccionadoUpdate.nombre_festival" />
+                        <label for="nombre_festival">Nombre</label>
+                        <InputText id="nombre_festival" name="nombre_festival" v-model="festivalSeleccionadoUpdate.nombre_festival" />
                     </div>
                     <div class="p-field">
-                    <label for="ubica">Ubicación</label>
-                    <InputText id="ubica" name="ubica" v-model="festivalSeleccionadoUpdate.ubicacion" />
+                        <label for="ubica">Ubicación</label>
+                        <InputText id="ubica" name="ubica" v-model="festivalSeleccionadoUpdate.ubicacion" />
                     </div>
                     <div class="p-field">
-                    <label for="fechas">Fecha</label>
-                    <DatePicker id="fechas" name="fechas" v-model="festivalSeleccionadoUpdate.fecha" showIcon />
+                        <label for="fechas">Fecha</label>
+                        <DatePicker id="fechas" name="fechas" v-model="festivalSeleccionadoUpdate.fecha" showIcon />
                     </div>
                     <div class="p-field">
-                    <label for="descrip">Descripción</label>
-                    <Textarea id="descrip" name="descrip" v-model="festivalSeleccionadoUpdate.descripcion" rows="3" />
+                        <label for="descrip">Descripción</label>
+                        <Textarea id="descrip" name="descrip" v-model="festivalSeleccionadoUpdate.descripcion" rows="3" />
                     </div>
                     <Button label="Guardar Cambios" icon="pi pi-check" @click="guardarFestivalUpdate" />
                 </div>
@@ -111,7 +111,6 @@
         </div>
     </div>
 </template>
-  
 <script>
 import axios from 'axios';
 import AsignarArtista from "../components/AsignarArtista.vue";
@@ -280,41 +279,57 @@ export default {
 <style scoped>
 h1{
     font-family: 'Poppins', sans-serif;
-    font-size: 2rem; /* Ajusta el tamaño */
+    font-size: 2rem; 
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1.5px;
 }
+.button-agregarFestival {
+    text-align: center;
+    margin-top: 2rem; 
+    margin-bottom: 3rem; 
+}
+
+.button-agregarFestival .p-button {
+    background-color: #2c3e50; 
+    color: white; 
+    font-size: 1.1rem; 
+    padding: 1rem 2rem; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
+    transition: all 0.3s ease-in-out;
+}
+.button-agregarFestival .p-button:hover {
+    background-color: #34495e; 
+    transform: scale(1.05); 
+}
+.button-agregarFestival .p-button:focus {
+    box-shadow: 0 0 0 2px rgba(44, 62, 80, 0.5); 
+}
 .carousel-container {
-  width: 100%;
-  max-width: 1500px;
-  margin: auto;
-  padding: 20px 0;
+    width: 100%;
+    max-width: 1500px;
+    margin: auto;
+    padding: 20px 0;
 }
-
-/* Contenedor de cada imagen */
 .image-card {
-  position: relative;
-  overflow: hidden;
-  border-radius: 12px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
 .image-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+    transform: scale(1.05);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
 }
-
-/* Imagen dentro del carrusel */
 .image {
-  width: 100%;
-  height: 400px; /* Ajusta según tu preferencia */
-  object-fit: cover;
-  border-radius: 12px;
-  transition: opacity 0.3s ease;
+    width: 100%;
+    height: 400px; 
+    object-fit: cover;
+    border-radius: 12px;
+    transition: opacity 0.3s ease;
 }
-
 .image-card:hover .image {
   opacity: 0.9;
 }
