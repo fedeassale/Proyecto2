@@ -1,12 +1,13 @@
 <template>
     <div>
-        <h1 class="center mt-4"><strong>Los mejores Festivales del País</strong></h1>
+        <h1 class="center"><strong>Los mejores Festivales del País</strong></h1>
         <div class="carousel-container">
             <Carousel :value="imagenes" :numVisible="3" :numScroll="1">
                 <template #item="slotProps">
                     <div class="border border-surface-200  rounded m-2 p-4">
-                        <div class="  image-card">
+                        <div class="  image-card image-wrapper">
                             <img :src="slotProps.data.url_imagen" alt="Imagen del festival" class=" rounded image" />
+                            <div class="center  festival-nombre">{{ slotProps.data.nombre_festival }}</div>
                         </div>
                     </div>
                 </template>
@@ -37,7 +38,7 @@
             </div>
         </Dialog>
         <div v-for="festival in festivalesFormateados" :key="festival.id" class="festival-container">
-            <div class="festival-header " :style="{ backgroundImage: `url(${imagenes[0]?.url_imagen})`}">
+                <div class="festival-header " :style="{ backgroundImage: `url(${festival.url_imagen || imagenes[0]?.url_imagen})`}">       
                 <div class="btn-right">
                     <Button icon="pi pi-times" class=" p-button-rounded p-button-secondary" @click="deleteFestival(festival.id)" />
                 </div>
@@ -145,19 +146,22 @@ export default {
     },
   	computed: {
     	festivalesFormateados() {
-      		return this.festivales.map(festival => ({
+      		const festivales= this.festivales.map(festival => ({
         	...festival,
         	id: festival.id || festival.festival_id,
         	fecha: festival.fecha.split("T")[0],
-            ubicacion: festival.ubicacion || "Sin ubicación" 
+            ubicacion: festival.ubicacion || "Sin ubicación",
+            url_imagen: festival.url_imagen 
       		}));
+              console.log("Festivales formateados:", festivales);
+              return festivales;
     	}
   	},
   	methods: {
         async cargarImagenes() {
             try {
-                const response = await axios.get("http://localhost:8080/imagen");
-                this.imagenes = response.data; // Asigna el array de imágenes al carrusel
+                const img = await axios.get("http://localhost:8080/imagen");
+                this.imagenes = img.data; // Asigna el array de imágenes al carrusel
             } catch (error) {
                 console.error("Error al cargar imágenes:", error);
             }
@@ -214,6 +218,8 @@ export default {
     	try {
       		const response = await axios.get('http://localhost:8080/api/getfestivals');
 			this.festivales = response.data;
+            this.festivales = [...this.festivales]; 
+            console.log("festivales",response.data)
       	} catch (error) {
       		console.error('Error al obtener festivales:', error);
       	}
@@ -233,6 +239,7 @@ export default {
                         nombre_festival: row.nombre_festival,
                         fecha: row.fecha.split("T")[0],
                         ubicacion: row.ubicacion,
+                        url_imagen: row.url_imagen || null,
                         artistas: []
                     };
                     festivalesMap.set(row.festival_id, festival);
@@ -283,6 +290,27 @@ h1{
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1.5px;
+}
+.image-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%; /* Ajusta según necesites */
+}
+
+.festival-nombre {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 5px 10px;
+    font-weight: bold;
+    border-radius: 5px;
+    text-align: center;
+    width: 80%; 
+    font-family: Concert One;
+    font-size: 1.3rem;
 }
 .button-agregarFestival {
     text-align: center;
@@ -337,10 +365,13 @@ h1{
     padding: 20px;
     text-align: center;
     border-radius: 10px;
+    text-shadow: 8px 8px 16px black; 
     color: white;
     font-size: 1.5rem;
     font-weight: bold;
-    background-size: contain;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 .festival-table {
     width: 100%;
@@ -353,15 +384,15 @@ h1{
     margin-top: 20px;
     border: 1px solid #000000;
     border-radius: 12px;
-    background-color: #ffffff;
+    background-color: white;
 }
 .festival-title {
     font-family: Concert One; 
 	text-align: center;
-	font-size: 2rem;
+	font-size: 2.5rem;
 	font-weight: bold;
 	margin-bottom: 20px;
-	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    text-shadow: 8px 8px 16px black; 
 }
 .festival-title strong {
 	display: inline-block;

@@ -1,91 +1,78 @@
 <template>
 	<div class="artistas">
 		<h1>Lista de Canciones</h1>
-		<DataTable :value="cancionesFlat" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" tableStyle="min-width: 50rem " class="mb-40"
-			paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-			currentPageReportTemplate="{first} to {last} of {totalRecords}">
-			<Button label="Agregar" icon="pi pi-plus" @click="mostrarDialog" class="ml-4" severity="contrast" />
-			<Column field="titulo" header="Canción" style="width: 20%">
-				<template #body="slotProps">
-					{{ slotProps.data.titulo }}
-				</template>
-			</Column>
-			<!-- <Column style="width: 10%">
-				<template #body="slotProps">
-					<Button v-if="slotProps.data.titulo"  icon="pi pi-pencil" class="p-button-rounded p-button-secondary" @click="abrirModalEdicionCancion(slotProps.data)" />
-				</template>
-			</Column> -->
-			<Column field="duracion" header="Duración" style="width: 15%">
-				<template #body="slotProps">
-					{{ slotProps.data.duracion }}
-				</template>
-			</Column>
-			<Column field="name" header="Álbum" style="width: 25%" headerClass="text-align:center;" >
-				<template #body="slotProps">
-					{{ slotProps.data.name }}
-				</template>
-			</Column>
-			<!-- <Column style="width: 10%">
-				<template #body="slotProps">
-					<Button v-if="slotProps.data.name" icon="pi pi-pencil" class="p-button-rounded p-button-secondary" @click="abrirModalEdicionAlbum(slotProps.data)" />
-				</template>
-			</Column> -->
-			<Column field="nombre" header="Artista" style="width: 30%">
-				<template #body="slotProps">
-					{{ slotProps.data.nombre }}
-				</template>
-			</Column>
-			<!-- <Column style="width: 10%">
-				<template #body="slotProps">
-					<Button v-if="slotProps.data.nombre" icon="pi pi-pencil" class="p-button-rounded p-button-secondary" @click="abrirModalEdicion(slotProps.data)" />
-				</template>
-			</Column> -->
-			<Column header="Editar" style="width: 10%">
-				<template #body="slotProps">
-					<Button icon="pi pi-pencil" class="p-button-rounded p-button-secondary" @click="abrirModalEdicion(slotProps.data)" />
-				</template>
-			</Column>
-			<Column header="Eliminar" style="width: 5%">
-				<template #body="slotProps">
-					<Button icon="pi pi-times-circle" class="p-button-rounded p-button-danger" @click="eliminarCancion(slotProps.data.song_id)" />
-				</template>
-			</Column>
-			<Column header="Eliminar Artistas" style="width:  5%">
-				<template #body="slotProps">
-					<Button icon="pi pi-trash" class="p-button-rounded p-button-danger" @click="eliminarArtista(slotProps.data.id)" />
-				</template>
-			</Column>
-		</DataTable>
-		<Dialog v-model:visible="dialogEdicionVisible" header="Editar Datos" :modal="true">
-			<div class="p-fluid formContainer">
-				<div class="p-field formField">
-					<label for="nombre">Nombre del Artista</label>
-					<InputText v-model="datosEditados.nombre" />
+		<div class="center-table">
+			<DataTable :value="cancionesFlat" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" tableStyle="min-width: 50rem " class="mb-40"
+				paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+				currentPageReportTemplate="{first} to {last} of {totalRecords}">
+				<Button label="Agregar" icon="pi pi-plus" @click="mostrarDialog" class="ml-4" severity="contrast" />
+				<Column field="titulo" header="Canción" style="width: 20%">
+					<template #body="slotProps">
+						{{ slotProps.data.titulo }}
+					</template>
+				</Column>
+				<Column field="duracion" header="Duración" style="width: 15%">
+					<template #body="slotProps">
+						{{ slotProps.data.duracion }}
+					</template>
+				</Column>
+				<Column field="name" header="Álbum" style="width: 25%" headerClass="text-align:center;" >
+					<template #body="slotProps">
+						{{ slotProps.data.name }}
+					</template>
+				</Column>
+				<Column field="nombre" header="Artista" style="width: 30%">
+					<template #body="slotProps">
+						{{ slotProps.data.nombre }}
+					</template>
+				</Column>
+				<Column header="Editar" style="width: 10%">
+					<template #body="slotProps">
+						<Button icon="pi pi-pencil" class="p-button-rounded p-button-secondary" @click="abrirModalEdicion(slotProps.data)" />
+					</template>
+				</Column>
+				<Column header="Eliminar" style="width: 5%">
+					<template #body="slotProps">
+						<Button icon="pi pi-times-circle" class="p-button-rounded p-button-danger" @click="eliminarCancion(slotProps.data.song_id)" />
+					</template>
+				</Column>
+				<Column header="Eliminar Artistas" style="width:  5%">
+					<template #body="slotProps">
+						<Button icon="pi pi-trash" class="p-button-rounded p-button-danger" @click="eliminarArtista(slotProps.data.id)" />
+					</template>
+				</Column>
+			</DataTable>
+			<Dialog v-model:visible="dialogEdicionVisible" header="Editar Datos" :modal="true">
+				<div class="p-fluid formContainer">
+					<div class="p-field formField">
+						<label for="nombre">Nombre del Artista</label>
+						<InputText v-model="datosEditados.nombre" />
+					</div>
+					<div class="p-field formField">
+						<label for="genero">Género del Artista</label>
+						<InputText v-model="datosEditados.genero" />
+					</div>
+					<div class="p-field formField">
+						<label for="name">Nombre del Álbum</label>
+						<InputText v-model="datosEditados.name" />
+					</div>
+					<div class="p-field formField">
+						<label for="titulo">Título de la Canción</label>
+						<InputText v-model="datosEditados.titulo" />
+					</div>
+					<div class="p-field formField">
+						<label for="duracion">Duración de la Canción</label>
+						<InputText v-model="datosEditados.duracion" />
+					</div>
 				</div>
-				<div class="p-field formField">
-					<label for="genero">Género del Artista</label>
-					<InputText v-model="datosEditados.genero" />
-				</div>
-				<div class="p-field formField">
-					<label for="name">Nombre del Álbum</label>
-					<InputText v-model="datosEditados.name" />
-				</div>
-				<div class="p-field formField">
-					<label for="titulo">Título de la Canción</label>
-					<InputText v-model="datosEditados.titulo" />
-				</div>
-				<div class="p-field formField">
-					<label for="duracion">Duración de la Canción</label>
-					<InputText v-model="datosEditados.duracion" />
-				</div>
-			</div>
-			<template #footer>
-				<Button label="Cancelar" icon="pi pi-times" class="p-button-text" @click="dialogEdicionVisible = false" />
-				<Button label="Guardar" icon="pi pi-check" class="p-button-primary" @click="guardarEdicion" />
-			</template>
-		</Dialog>
-		<!-- <Formulario @data-updated="cargarArtistas"/> -->
-		<InsertDataDialog :dialogVisible="dialogVisibleGeneral" @update:dialogVisible="dialogVisibleGeneral = $event"  @data-updated-2="cargarArtistas"/>
+				<template #footer>
+					<Button label="Cancelar" icon="pi pi-times" class="p-button-text" @click="dialogEdicionVisible = false" />
+					<Button label="Guardar" icon="pi pi-check" class="p-button-primary" @click="guardarEdicion" />
+				</template>
+			</Dialog>
+			<!-- <Formulario @data-updated="cargarArtistas"/> -->
+			<InsertDataDialog :dialogVisible="dialogVisibleGeneral" @update:dialogVisible="dialogVisibleGeneral = $event"  @data-updated-2="cargarArtistas"/>
+		</div>
 	</div>
 </template>
 <script>
@@ -205,7 +192,10 @@ export default {
 	gap: 1rem; 
 	padding: 1rem;
 }
-
+.center-table {
+	margin: 0 auto;
+	width: 60%;
+}
 .formField {
 	display: flex;
 	flex-direction:column;

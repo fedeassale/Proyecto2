@@ -70,7 +70,7 @@ export default {
 .p-menubar .p-menuitem-link,
 .p-menubar .p-menuitem {
 	background: transparent !important;
-	color: white !important;
+	color: rgb(2, 0, 0) !important;
 	border: none !important;
     box-shadow: none !important;
 }
@@ -82,16 +82,32 @@ export default {
 
 /* Estilo de los enlaces del menú */
 .menu-item {
-	color: white;
+	color: rgb(255, 255, 255);
 	font-size: 1rem;
 	padding: 10px 15px;
 	text-decoration: none;
-	transition: color 0.3s ease, transform 0.2s ease;
 }
 
 /* Efecto hover en los enlaces */
 .menu-item:hover {
 	color: #f39c12;
-	transform: scale(1.1);
+}
+@media (max-width: 960px) {
+    .p-menubar-root-list,
+    .p-menubar .p-menuitem-link,
+    .p-menubar .p-menuitem {
+        color: black !important; /* Texto en negro en móviles */
+        background-color: white !important; /* Fondo blanco en el submenú */
+    }
+
+    /* Ajusta también los enlaces */
+    .menu-item {
+        color: black !important;
+    }
+
+    /* Hover en móviles */
+    .menu-item:hover {
+        color: #f39c12 !important;
+    }
 }
 </style>

@@ -4,7 +4,12 @@ export class MusicaDAO {
   //LLamar a todos los datos
 	static async findAllArtist() {
 		const result = await pool.query(
-			'SELECT musica.artistas.id AS artist_id, musica.artistas.nombre,musica.artistas.genero, musica.albums.id AS album_id, musica.albums.name, musica.canciones.id AS song_id, musica.canciones.titulo,musica.canciones.duracion FROM musica.artistas   LEFT JOIN  musica.albums  ON musica.artistas.id = musica.albums.artist_id  LEFT JOIN  musica.canciones  ON musica.albums.id = musica.canciones.album_id ORDER BY musica.canciones.titulo , musica.albums.name,musica.artistas.nombre')
+			`SELECT musica.artistas.id AS artist_id, musica.artistas.nombre,musica.artistas.genero,
+			 musica.albums.id AS album_id, musica.albums.name, musica.canciones.id AS song_id,
+			  musica.canciones.titulo,musica.canciones.duracion FROM musica.artistas   
+			  LEFT JOIN  musica.albums  ON musica.artistas.id = musica.albums.artist_id  
+			  LEFT JOIN  musica.canciones  ON musica.albums.id = musica.canciones.album_id 
+			  ORDER BY musica.canciones.titulo , musica.albums.name,musica.artistas.nombre`)
 		return result.rows;            
 	}
 	//Insertar todos los datos
@@ -234,6 +239,7 @@ export class MusicaDAO {
 				f.nombre_festival, 
 				f.fecha, 
 				f.ubicacion, 
+				url_imagen,
 				a.id AS artista_id, 
 				a.nombre AS artista_nombre, 
 				a.genero AS genero_artista,
@@ -247,13 +253,14 @@ export class MusicaDAO {
 					) FILTER (WHERE c.id IS NOT NULL), 
 					'[]'
 				) AS canciones
-			FROM musica.festivales f
-			LEFT JOIN musica.festival_artista fa ON f.id = fa.festival_id
-			LEFT JOIN musica.artistas a ON fa.artist_id = a.id
-			LEFT JOIN musica.festival_artista_cancion fac ON fa.id = fac.festival_artista_id
-			LEFT JOIN musica.canciones c ON fac.song_id = c.id
-			GROUP BY f.id, a.id, a.genero
-			ORDER BY f.fecha, a.nombre;
+				FROM musica.festivales f
+				LEFT JOIN musica.festival_artista fa ON f.id = fa.festival_id
+				LEFT JOIN musica.artistas a ON fa.artist_id = a.id
+				LEFT JOIN musica.festival_artista_cancion fac ON fa.id = fac.festival_artista_id
+				LEFT JOIN musica.canciones c ON fac.song_id = c.id
+				LEFT JOIN musica.imagenes i ON f.imagen_id = i.id 
+				GROUP BY f.id,url_imagen, a.id, a.genero 
+				ORDER BY f.fecha, a.nombre;
 
 		`;
 		const { rows } = await pool.query(query);

@@ -1,19 +1,21 @@
-<template>  
-	<DataTable :value="products" tableStyle="min-width: 50rem" class="total">
-		<Column field="name" header="Name"></Column>
-		<Column header="Image">
-			<template #body="slotProps">
-				<img :src="`https://primefaces.org/cdn/primevue/images/product/${slotProps.data.image}`" :alt="slotProps.data.image" class="w-24 rounded" />
-			</template>
-		</Column>
-		<Column field="price" header="Price">
-			<template #body="slotProps">
-				{{ formatCurrency(slotProps.data.price) }}
-			</template>
-		</Column>
-		<Column field="category" header="Category"></Column>
-		<template #footer> En total hay {{ products ? products.length : 0 }} productos. </template>
-	</DataTable>
+<template>
+  	<div class="center-table">
+		<DataTable :value="products" tableStyle="min-width: 50rem" class="total">
+			<Column field="name" header="Name"></Column>
+			<Column header="Image">
+				<template #body="slotProps">
+					<img :src="`https://primefaces.org/cdn/primevue/images/product/${slotProps.data.image}`" :alt="slotProps.data.image" class="w-24 rounded" />
+				</template>
+			</Column>
+			<Column field="price" header="Price">
+				<template #body="slotProps">
+					{{ formatCurrency(slotProps.data.price) }}
+				</template>
+			</Column>
+			<Column field="category" header="Category"></Column>
+			<template #footer> En total hay {{ products ? products.length : 0 }} productos. </template>
+		</DataTable>
+  	</div> 
 </template>
 <script>
 export default{
@@ -84,5 +86,9 @@ export default{
 <style scoped>
 .total{
   	height: 90vh;
+}
+.center-table{
+	margin: auto;
+	width:60%;
 }
 </style>

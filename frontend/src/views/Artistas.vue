@@ -1,36 +1,41 @@
 <template>
 	<div class="artistas">
 		<h1>Lista de Artistas</h1>
-		<TreeTable :value="artistasTree" tableStyle="min-width: 50rem">
-			<Column field="nombre" header="Artistas" expander style="width: 33%"></Column>
-			<Column field="name" header="Álbum" style="width: 33%"></Column>
-			<Column field="titulo" header="Canción" style="width: 33%"></Column>
-		</TreeTable>
+		<div class="center-table">
+			<TreeTable :value="artistasTree" tableStyle="min-width: 50rem">
+				<Column field="nombre" header="Artistas" expander style="width: 33%"></Column>
+				<Column field="name" header="Álbum" style="width: 33%"></Column>
+				<Column field="titulo" header="Canción" style="width: 33%"></Column>
+			</TreeTable>
+		</div>
 	</div>
 </template>
 <script>
-import axios from 'axios';
+import { useMusicStore } from '../store/MusicStore.js';
+import { mapState, mapActions } from 'pinia';
+
 export default {
 	data() {
 		return {
-			artistasTree: [] 
+			musicStore: useMusicStore(),
 		};
 		},
-  	async created() {
-    	try {
-			const response = await axios.get('http://localhost:8080/api/artists');
-			this.artistasTree = this.formatTreeData(response.data); // Transformamos los datos
-    	} catch (error) {
-      		console.error('Error al obtener artistas:', error);
-    	}
+  	created() {
+		this.fetchArtistas();
+  	},
+	computed: {
+    	...mapState(useMusicStore, ['artistas']),
+		artistasTree() {
+			return this.formatTreeData(this.artistas);
+		}
   	},
   	methods: {
-      // Función que transforma los datos para ajustarlos al formato de TreeTable
+		...mapActions(useMusicStore, ['fetchArtistas']),
 		formatTreeData(data) {
+			console.log("sadas",data) 
 			const artistasMap = new Map();
 	
 		data.forEach(item => {
-		// Si el artista no existe en el mapa, lo creamos
 			if (!artistasMap.has(item.nombre)) {
 				artistasMap.set(item.nombre, {
 					key: `artista-${item.nombre}`,
@@ -39,7 +44,6 @@ export default {
 				});
 			}
 			const artista = artistasMap.get(item.nombre);
-		// Verificamos si el álbum ya existe dentro del artista
 			let album = artista.children.find(a => a.data.name === item.name);
 			if (!album) {
 				album = {
@@ -49,13 +53,12 @@ export default {
 				};
 				artista.children.push(album);
 			} 
-		// Agregamos la canción dentro del álbum
 			album.children.push({
 				key: `cancion-${item.titulo}`,
 				data: { titulo: item.titulo, tipo: "Canción" }
 			});
 		});
-		return Array.from(artistasMap.values()); // Convertimos el Map a un array   
+		return Array.from(artistasMap.values()); 
 		}
     }
 }; 
@@ -82,6 +85,10 @@ th, td {
 }
 th {
     background-color: #f4f4f4;
+}
+.center-table {
+	margin: 0 auto;
+	width: 60%;
 }
 </style>
   
