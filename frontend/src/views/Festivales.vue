@@ -18,21 +18,21 @@
         </div>
         <Dialog v-model:visible="dialogVisible" header="Crear Festival" modal>
             <div class="p-fluid">
-                <div class="p-field">
-                    <label for="nombre">Nombre</label>
-                    <InputText id="nombre" v-model="nuevoFestival.nombre" />
+                <div class="p-field mt-4">
+                    <label for="nombre" class="p-inputtext">Nombre</label>
+                    <InputText id="nombre" v-model="nuevoFestival.nombre" class="p-inputtext"/>
                 </div>
-                <div class="p-field">
-                    <label for="ubi">Ubicación</label>
-                    <InputText id="ubi" v-model="nuevoFestival.ubicacion" />
+                <div class="p-field mt-4">
+                    <label for="ubi" class="p-inputtext">Ubicación</label>
+                    <InputText id="ubi" v-model="nuevoFestival.ubicacion"  class="p-inputtext"/>
                 </div>
-                <div class="p-field">
-                    <label for="fe">Fecha</label>
-                    <DatePicker id="fe" v-model="nuevoFestival.fecha" showIcon />
+                <div class="p-field mt-4">
+                    <label for="fe" class="p-inputtext">Fecha</label>
+                    <DatePicker id="fe" v-model="nuevoFestival.fecha" showIcon class="p-inputtext"/>
                 </div>
-                <div class="p-field">
-                    <label for="description">Descripción</label>
-                    <Textarea id="description" v-model="nuevoFestival.descripcion" rows="3" />
+                <div class="p-field mt-4">
+                    <label for="description" class="p-inputtext">Descripción</label>
+                    <Textarea id="description" v-model="nuevoFestival.descripcion" rows="3" class="p-inputtext"/>
                 </div>
                 <Button label="Guardar" icon="pi pi-check" @click="guardarFestival" />
             </div>
@@ -75,7 +75,7 @@
                 </Column>
                 <Column style="width: 5%">
                     <template #body="slotProps">
-                        <Button  icon="pi pi-times" v-if="slotProps.data.nombre" class="tablaElementos w-30 p-button-rounded p-button-secondary"  @click="console.log('Eliminando:', festival.id, slotProps.data.id); eliminarartistascanciones(festival.id, slotProps.data.id)" />
+                        <Button  icon="pi pi-times" variant="text" v-if="slotProps.data.nombre" class="tablaElementos w-30 p-button-rounded p-button-secondary"  @click="console.log('Eliminando:', festival.id, slotProps.data.id); eliminarartistascanciones(festival.id, slotProps.data.id)" />
                     </template>
                 </Column>
                 <template #footer >
@@ -90,24 +90,23 @@
                 <div class="p-fluid">
                     <div class="p-field">
                         <label for="nombre_festival">Nombre</label>
-                        <InputText id="nombre_festival" name="nombre_festival" v-model="festivalSeleccionadoUpdate.nombre_festival" />
+                        <InputText id="nombre_festival" name="nombre_festival" v-model="festivalSeleccionadoUpdate.nombre_festival" class="p-inputtext"/>
                     </div>
                     <div class="p-field">
                         <label for="ubica">Ubicación</label>
-                        <InputText id="ubica" name="ubica" v-model="festivalSeleccionadoUpdate.ubicacion" />
+                        <InputText id="ubica" name="ubica" v-model="festivalSeleccionadoUpdate.ubicacion" class="p-inputtext"/>
                     </div>
-                    <div class="p-field">
-                        <label for="fechas">Fecha</label>
-                        <DatePicker id="fechas" name="fechas" v-model="festivalSeleccionadoUpdate.fecha" showIcon />
+                    <div class="p-field mt-3">
+                        <label for="fechas" class="p-inputtext">Fecha</label>
+                        <DatePicker id="fechas" name="fechas" v-model="festivalSeleccionadoUpdate.fecha" showIcon class="p-inputtext"/>
                     </div>
-                    <div class="p-field">
-                        <label for="descrip">Descripción</label>
-                        <Textarea id="descrip" name="descrip" v-model="festivalSeleccionadoUpdate.descripcion" rows="3" />
+                    <div class="p-field mt-3">
+                        <label for="descrip" class="p-inputtext">Descripción:</label>
+                        <Textarea id="descrip" name="descrip" v-model="festivalSeleccionadoUpdate.descripcion" rows="3" class="p-inputtext"/>
                     </div>
                     <Button label="Guardar Cambios" icon="pi pi-check" @click="guardarFestivalUpdate" />
                 </div>
             </Dialog>
-            
             <AsignarArtista v-model:visible="dialogoAsignacion" :festivalId="festivalSeleccionado" @actualizar=" cargarArtistasCanciones" />
         </div>
     </div>
@@ -290,6 +289,11 @@ h1{
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1.5px;
+}
+.p-inputtext {
+    width: 100%;
+    padding: 8px;
+    font-size: 1rem;
 }
 .image-wrapper {
     position: relative;

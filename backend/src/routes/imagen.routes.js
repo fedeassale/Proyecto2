@@ -1,5 +1,6 @@
 import express from "express";
 import { ImagenService } from "../services/imagen.service.js";
+
 const router = express.Router();
 
 router.get("/", async (req, res) => {

@@ -32,11 +32,11 @@ export default {
 				command: () => this.$router.push("/productos"),
 				},
 				{
-				label: "Musica",
+				label: "Editor Musica",
 				command: () => this.$router.push("/musica"),
 				},
 				{
-				label: "Artistas",
+				label: "Musica",
 				command: () => this.$router.push("/artistas"),
 				},
 				{
